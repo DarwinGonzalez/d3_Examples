@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Example 8</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+        var timer = null;
+        var w = 960, h = 500, flag = 0, flag2 = 0;
+
+        var body = d3.select("body");
+        body.append("h1").text("Ejercicio 8");
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        var myCircle = svg
+            .append("circle")
+            .attr("cx", 100)
+            .attr("cy", 100)
+            .attr("r", 30)
+            .style("fill", "steelblue");
+
+        myCircle.on("click", function () {
+            flag = 1 - flag;
+            myCircle.style("fill", flag ? "darkorange" : "steelblue");
+        });
+
+        myCircle.on("mouseover", function () {
+            timer = setInterval( () => {
+                myCircle.attr("r", parseInt(d3.select(this).attr("r")) + 1 );
+            }, 100);
+        });
+
+        myCircle.on("mouseleave", function () {
+            clearInterval(timer);
+            myCircle.transition().duration(2000).ease(d3.easeBounceOut)
+            .attr("r", 30);
+        });
+
+
+    </script>
+</body>
+
+</html>

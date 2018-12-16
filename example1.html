@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example 1</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    </script>
+    <script type="text/javascript">
+
+        var dataset = [];
+        for (var i = 0, t = 25; i < t; i++) {
+            dataset.push(Math.round(Math.random() * t))
+        }
+
+        d3.select("body").selectAll("p")
+            .data(dataset)
+            .enter()
+            .append("p")
+            .text(function (d) { return d; });
+
+    </script>
+</body>
+
+</html>

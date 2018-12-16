@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example 3</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    </script>
+    <script type="text/javascript">
+
+        var dataset = [];
+        for (var i = 0, t = 25; i < t; i++) {
+            dataset.push(Math.round(Math.random() * t))
+        }
+
+        var br = d3.select("body").append("br");
+        var body = d3.select("body");
+
+        body.append("h1").text("Example 3.1");
+        var svg = d3.select("body").append("svg");
+        var w = 500;
+        var h = 100;
+        svg.attr("width", w)
+            .attr("height", h);
+
+        var circles = svg.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle");
+
+        circles.attr("cx", function (d, i) {
+            return (i * 50) + 25;
+        })
+            .attr("cy", h / 2).attr("r", function (d) {
+                return d;
+            })
+            .attr("fill", "yellow")
+            .attr("stroke", "orange")
+            .attr("stroke-width", function (d) {
+                return d / 2;
+            });
+
+        var br = d3.select("body").append("br");
+
+        body.append("h1").text("Example 3.2");
+        var svg2 = d3.select("body").append("svg");
+        var w = 500;
+        var h = 100;
+
+        svg2.attr("width", w)
+            .attr("height", h);
+
+        var rectangles = svg2.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect");
+
+        rectangles.attr("x", function (d, i) {
+            return (i * 50) + 25;
+        })
+            .attr("y", h / 2)
+            .attr("width", function (d) {
+                return d;
+            }).attr("height", function (d) {
+                return d;
+            })
+            .attr("fill", "yellow")
+            .attr("stroke", "orange")
+            .attr("stroke-width", function (d) {
+                return d / 5;
+            });
+
+    </script>
+</body>
+
+</html>

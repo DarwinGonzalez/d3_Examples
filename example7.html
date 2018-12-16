@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example 7</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    </script>
+    <script type="text/javascript">
+
+        var dataset = [];
+        for (var i = 0, t = 25; i < t; i++) {
+            dataset.push(Math.round(Math.random() * t))
+        }
+        console.log(dataset);
+
+        var w = 500;
+        var h = 100;
+        var barPadding = 1;
+        var body = d3.select("body");
+
+        var body = d3.select("body");
+        body.append("h1").text("Mi primer gráfico de barras");
+
+        var button = d3.select("body").append("button");
+        button.text("Generar numeros");
+
+        body.append("br");
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        svg.selectAll("rect")
+            .data(dataset)
+            .enter()
+            .append("rect")
+            .attr("x", function (d, i) {
+                return i * (w / dataset.length);
+            })
+            .attr("y", function (d) {
+                return h - (d * 4);
+            })
+            .attr("width", w / dataset.length - barPadding)
+            .attr("height", function (d) {
+                return d * 4;
+            })
+            .attr("fill", function (d) {
+                return "rgb(" + Math.round(d * 10) + ", 0, 0 )";
+            });
+
+        svg.selectAll("text")
+            .data(dataset)
+            .enter()
+            .append("text")
+            .text(function (d) {
+                return Math.round(d);
+            })
+            .attr("text-anchor", "middle")
+            .attr("x", function (d, i) {
+                return i * (w / dataset.length) + (w / dataset.length -
+                    barPadding) / 2;
+            })
+            .attr("y", function (d) {
+                return h - (d * 4) + 14;
+            }).attr("font-family", "sans-serif")
+            .attr("font-size", "11px")
+            .attr("fill", "white");
+
+        function GenerarPuntos() {
+            var puntosAleatorios = [];
+            pushValues(puntosAleatorios);
+            var rectangles = svg.selectAll("rect")
+                .data(puntosAleatorios)
+                .transition().duration(1000).ease(d3.easeBounceOut);
+
+            rectangles.attr("x", function (d, i) {
+                return i * (w / puntosAleatorios.length);
+            })
+                .attr("y", function (d) {
+                    return h - (d * 4);
+                })
+                .attr("height", function (d) {
+                    return d * 4;
+                })
+                .attr("fill", function (d) {
+                    return "rgb(" + Math.round(d * 10) + ", 0, 0 )";
+                });
+
+            svg.selectAll("text")
+                .data(puntosAleatorios)
+                .transition().duration(1000).ease(d3.easeBounceOut)
+                .text(function (d) {
+                    return Math.round(d);
+                })
+                .attr("text-anchor", "middle")
+                .attr("x", function (d, i) {
+                    return i * (w / puntosAleatorios.length) + (w / puntosAleatorios.length -
+                        barPadding) / 2;
+                })
+                .attr("y", function (d) {
+                    return h - (d * 4) + 14;
+                }).attr("font-family", "sans-serif")
+                .attr("font-size", "11px")
+                .attr("fill", "white");
+        }
+
+        function pushValues(array) {
+            for (var i = 0, t = 25; i < t; i++) {
+                array.push(Math.round(Math.random() * t))
+            }
+        }
+
+        d3.select("button")
+            .on("click", function () {
+                GenerarPuntos();
+            });
+
+    </script>
+</body>
+
+</html>

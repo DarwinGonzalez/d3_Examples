@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Example 9</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    <script type="text/javascript">
+
+        var w = 600;
+        var h = 600;
+        var dataset = [ {"label":"Suarez", "value":5},
+                        {"label":"Ronaldo", "value":10},
+                        {"label":"Messi", "value":20},
+                        {"label":"Benzema", "value":45},
+                        {"label":"Neymar", "value":6},
+                        {"label":"Griezman", "value":25}];
+
+        var radis = Math.min(w, 2 * h) / 2
+        var thickness = 100
+        var anglesRange = 0.5 * Math.PI
+
+        var pie = d3.pie();
+        var outerRadius = w / 2;
+        var innerRadius = 0;
+
+        var pie = d3.pie()
+            .startAngle(anglesRange * -1)
+            .endAngle(anglesRange)
+            .value(function(d) { return d.value; });
+        var arc = d3.arc()
+            .innerRadius(180)
+            .outerRadius(radis);
+
+        var color = d3.scaleOrdinal(d3.schemeDark2);
+
+        var svg = d3.select("body")
+            .append("svg")
+            .attr("width", w)
+            .attr("height", h);
+
+        var arcs = svg.selectAll("g.arc")
+            .data(pie(dataset))
+            .enter()
+            .append("g")
+            .attr("class", "arc")
+            .attr("transform", "translate(" + outerRadius + "," +
+                outerRadius + ")");
+
+        arcs.append("path")
+            .attr("fill", function (d, i) {
+                return color(i);
+            })
+            .attr("d", arc);
+
+        arcs.append("text")
+            .attr("transform", function (d) {
+                return "translate(" + arc.centroid(d) + ")";
+            })
+            .attr("text-anchor", "middle")
+            .text(function (d,i) {
+                return dataset[i].label;
+            });
+
+    </script>
+</body>
+
+</html>

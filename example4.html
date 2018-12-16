@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Example 4</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+</head>
+
+<body>
+    </script>
+    <script type="text/javascript">
+        var dataset = [];
+        for (var i = 0, t = 25; i < t; i++) {
+            dataset.push(Math.round(Math.random() * t))
+        }
+
+        var body = d3.select("body");
+        body.append("h1").text("Ejercicio 4");
+
+        var svg3 = d3.select("body").append("svg");
+        var w = 500;
+        var h = 100;
+
+        svg3.attr("width", w)
+            .attr("height", h)
+            .attr("id", "svg3");
+
+        var circles = svg3.selectAll("circle")
+            .data(dataset)
+            .enter()
+            .append("circle");
+
+        var puntosAleatorios = [];
+
+        function GenerarPuntos() {
+            pushValues(puntosAleatorios);
+
+            var circles = svg3.selectAll("circle")
+                .data(puntosAleatorios)
+
+            circles.attr("cx", function (d, i) {
+                return Math.round(Math.random() * (w - 20));
+            })
+                .attr("cy", function () {
+                    return Math.round(Math.random() * (h - 20));
+                })
+                .attr("r", function (d) {
+                    return d / 3;
+                });
+        }
+
+        function pushValues(array) {
+            for (var i = 0, t = 25; i < t; i++) {
+                array.push(Math.round(Math.random() * t))
+            }
+        }
+
+        GenerarPuntos();
+        var button = d3.select("body").append("button");
+        button.attr("onclick", "GenerarPuntos()");
+        button.text("Generar puntos aleatorios");
+
+    </script>
+</body>
+
+</html>
