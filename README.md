@@ -1,2 +1,2 @@
-# d3_Examples
-Using d3, some examples in browser
+# D3 (Data-Driven Documents or D3.js) examples
+Some examples of use of the [d3.js](https://d3js.org/) library representing data in the browser.
