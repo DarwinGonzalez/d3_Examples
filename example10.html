@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Example 10</title>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+  </head>
+
+  <body>
+    <script type="text/javascript">
+      //Ancho y alto
+      var w = 500;
+      var h = 300;
+
+      //Datos
+      var dataset = [
+        { Manzanas: 5, Naranjas: 10, Peras: 22 },
+        { Manzanas: 4, Naranjas: 12, Peras: 28 },
+        { Manzanas: 2, Naranjas: 19, Peras: 32 },
+        { Manzanas: 7, Naranjas: 23, Peras: 35 },
+        { Manzanas: 23, Naranjas: 17, Peras: 43 }
+      ];
+
+      //Escalamos los datos al tamaño de nuestro lienzo
+      var xScale = d3
+        .scaleBand()
+        .domain(d3.range(dataset.length))
+        .range([0, w])
+        .paddingInner(0.05);
+
+      var yScale = d3
+        .scaleLinear()
+        .domain([
+          0,
+          d3.max(dataset, function(d) {
+            return d.Manzanas + d.Naranjas + d.Peras;
+          })
+        ])
+        .range([h, 0]);
+      //Gama de colores
+      var colors = d3.scaleOrdinal(d3.schemeCategory10);
+
+      //Creamos un layout tipo stack
+      var stack = d3
+        .stack()
+        .keys(["Manzanas", "Naranjas", "Peras"])
+        .order(d3.stackOrderDescending); //Establece las claves
+
+      //Data, stacked
+      var series = stack(dataset);
+
+      //Creamos cuerpo SVG
+      var svg = d3
+        .select("body")
+        .append("svg")
+        .attr("width", w)
+        .attr("height", h);
+      //Añadimos un element grupo (g) por cada fila de valores
+      var groups = svg
+        .selectAll("g")
+        .data(series)
+        .enter()
+        .append("g")
+        .style("fill", function(d, i) {
+          return colors(i);
+        });
+      //Añadimos un rectángulo para cada dato
+      var rects = groups
+        .selectAll("rect")
+        .data(function(d) {
+          return d;
+        })
+        .enter()
+        .append("rect")
+        .attr("x", function(d, i) {
+          return xScale(i);
+        })
+        .attr("y", function(d) {
+          return yScale(d[1]);
+        })
+        .attr("height", function(d) {
+          return yScale(d[0]) - yScale(d[1]);
+        })
+        .attr("width", xScale.bandwidth());
+    </script>
+  </body>
+</html>
